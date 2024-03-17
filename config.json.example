@@ -1,0 +1,8 @@
+{
+    "PAPERLESS_CREDENTIALS": "username:password",
+    "PAPERLESS_API_URL": "http://localhost:8000/api",
+    "OLLAMA_API_URL": "http://localhost:8000/api",
+    "OLLAMA_LLM_MODEL": "mistral",
+    "#": "STIRLING_PDF_API_URL IS ONLY NEEDED FOR THE SPLIT-PDFS SCRIPT",
+    "STIRLING_PDF_API_URL": "http://localhost:8080/api"
+}
