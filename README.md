@@ -19,6 +19,10 @@ Additionally, gather your paperless-ngx URL and credentials, as the script inter
 
 An essential aspect affecting title quality is the LLM Model and Prompt. You can customize the prompt in the `create-titles.ts` file and adjust the model within the `config.json` file.
 
+### **If you want to generate titles in languages other than German, make sure to adjust the prompt accordingly.**
+Edit [this prompt](./src/create-titles.ts#L21) to match the language of your documents, you can also adjust the example to give the model a rough idea of the expected title.
+
+
 Since my documents are in German, I've opted for the "mistral" model as it delivers satisfactory results quickly. For English documents, a smaller model may suffice, while for other languages, experimentation may be necessary with different models.
 
 ### Split PDFs

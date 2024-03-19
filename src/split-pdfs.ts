@@ -19,6 +19,7 @@ const scans = readdirSync('scans');
 
 Promise.resolve().then(async () => {
   for (const scan of scans) {
+    console.log(`Processing ${scan}`);
     await extractPages(`scans/${scan}`);
   }
 });

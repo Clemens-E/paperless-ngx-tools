@@ -32,6 +32,13 @@ Promise.resolve().then(async () => {
   const documents = await getDocuments();
   console.log(`Fetched ${documents.results.length} documents`);
   for (const document of documents.results) {
+    if (
+      document.notes.some(({ note }: { note: string }) =>
+        note.includes('Processed(v2)'),
+      )
+    ) {
+      continue;
+    }
     await setTimeout(1000);
     const newTitle = await createNewTitle(document.content);
     if (newTitle) {
@@ -54,6 +61,35 @@ async function getDocuments() {
       },
     },
   );
+  if (!response.ok) {
+    throw new Error(
+      `Failed to get documents: ${
+        response.statusText
+      }\n\n${await response.text()}`,
+    );
+  }
+  return await response.json();
+}
+
+async function addNote(documentId: string, note: string) {
+  const response = await fetch(
+    `${CONFIG.PAPERLESS_API_URL}/documents/${documentId}/notes/`,
+    {
+      headers: {
+        Authorization: `Basic ${PAPERLESS_CREDENTIALS}`,
+        'Content-Type': 'application/json',
+      },
+      method: 'POST',
+      body: JSON.stringify({ note }),
+    },
+  );
+  if (!response.ok) {
+    throw new Error(
+      `Failed to add note to document: ${
+        response.statusText
+      }\n\n${await response.text()}`,
+    );
+  }
   return await response.json();
 }
 
