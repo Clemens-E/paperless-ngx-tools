@@ -48,6 +48,7 @@ Promise.resolve().then(async () => {
       }
       console.log(`New Title: "${newTitle}"`);
       await updateDocument({ ...document, title: newTitle });
+      await addNote(document.id, 'Processed(v2)');
     }
   }
 });
