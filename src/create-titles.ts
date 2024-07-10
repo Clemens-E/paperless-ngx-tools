@@ -124,7 +124,7 @@ async function _runCompletion(content: string) {
     },
     body: JSON.stringify({
       model: CONFIG.OLLAMA_LLM_MODEL,
-      prompt: TEMPLATE + content,
+      prompt: (TEMPLATE + content).slice(0, 4000),
       stream: false,
       options: {
         temperature: 0.2,
@@ -142,10 +142,9 @@ async function _runCompletion(content: string) {
 
 async function createNewTitle(content: string) {
   const newTitle = await _runCompletion(content);
-  const matches = /Title: "(.*)"/.exec(newTitle);
+  const matches = /\w+: "(.*)"/.exec(newTitle);
   if (!matches || matches.length < 2) {
-    console.error(`Failed to parse title`, newTitle);
-    return null;
+    return newTitle.replaceAll(/\"/g, '').trim();
   }
   return matches[1];
 }
